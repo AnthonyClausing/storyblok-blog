@@ -40,6 +40,7 @@ module.exports = {
   ** Nuxt.js modules
   */
   modules: [
+    ['storyblok-nuxt', {accessToken: 'rNVmsazippfCOOYNDvfdBwtt', cacheProvider: 'memory'}]
   ],
 
   /*

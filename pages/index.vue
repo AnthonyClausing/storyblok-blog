@@ -18,19 +18,37 @@ export default {
   components: {
     PostPreview
   },
+  asyncData(context) {
+    return context.app.$storyapi.get('cdn/stories', {
+      version: 'draft',
+      startsWith: 'blog/'
+    })
+      .then((res) => {
+        return {
+          posts: res.data.stories.map((bp) => {
+            return {
+              id: bp.slug,
+              title: bp.content.title,
+              previewText: bp.content.summary,
+              thumbnailUrl: bp.content.thumbnail
+            }
+          })
+        }
+      })
+  },
   data() {
     return {
       posts: [
         {
           title: 'A new beginning',
           previewText: 'This will be awesome, don\'t miss it!',
-          thumbnailUrl: 'https://cdn.pixabay.com/photo/2014/05/02/21/49/home-office-336373_960_720.jpg',
+          thumbnailUrl: 'https://tinylaptop.net/wp-content/uploads/2016/12/best-laptop-for-programming.jpg',
           id: 'a-new-beginning'
         },
         {
           title: 'A second beginning',
           previewText: 'This will be awesome, don\'t miss it!',
-          thumbnailUrl: 'https://cdn.pixabay.com/photo/2014/05/02/21/49/home-office-336373_960_720.jpg',
+          thumbnailUrl: 'https://tinylaptop.net/wp-content/uploads/2016/12/best-laptop-for-programming.jpg',
           id: 'a-second-beginning'
         }
       ]
