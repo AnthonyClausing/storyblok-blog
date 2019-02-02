@@ -32,6 +32,8 @@ export default {
               previewText: bp.content.summary,
               thumbnailUrl: bp.content.thumbnail
             }
+          }).filter((bp) => {
+            return bp.previewText !== undefined
           })
         }
       })
