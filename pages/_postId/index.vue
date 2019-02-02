@@ -38,7 +38,7 @@ export default {
    max-width: 500px;
    margin: auto;
  }
- 
+
  .post-content p {
    white-space: pre-line;
  }
