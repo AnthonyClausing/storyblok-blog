@@ -1,5 +1,5 @@
 <template>
-  <section id="about-page">
+  <section id="about-page" v-editable="blok">
     <h1>{{ title }}</h1>
     <p>{{ content }}</p>
   </section>
@@ -13,10 +13,27 @@ export default {
     })
       .then((res) => {
         return {
+          blok: res.data.story.content,
           title: res.data.story.content.title,
           content: res.data.story.content.content
         }
       })
+  },
+  mounted() {
+    this.$storybridge.on(['input', 'published', 'change'], (event) => {
+      if (event.action === 'input') {
+        // Inject content on the input event
+        if (event.story.id === this.story.id) {
+          this.story.content = event.story.content
+        }
+      } else if (!event.slugChanged) {
+        // Reload the page on save events
+        window.location.reload()
+      }
+      if (event.action === 'change') {
+        location.reload(true)
+      }
+    })
   }
 }
 </script>

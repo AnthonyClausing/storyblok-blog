@@ -1,6 +1,6 @@
 <template>
-  <div id="post">
-    <div class="post-thumbnail" :style="{backgroundImage: 'url(' + image + ')'}"></div>
+  <div id="post" v-editable="blok">
+    <div class="post-thumbnail" :style="{backgroundImage: 'url(' + image + ')'}" />
     <section class="post-content">
       <h1>{{ title }}</h1>
       <p>{{ content }}</p>
@@ -16,11 +16,28 @@ export default {
     })
       .then((res) => {
         return {
+          blok: res.data.story.content,
           image: res.data.story.content.thumbnail,
           title: res.data.story.content.title,
           content: res.data.story.content.content
         }
       })
+  },
+  mounted() {
+    this.$storybridge.on(['input', 'published', 'change'], (event) => {
+      if (event.action === 'input') {
+        // Inject content on the input event
+        if (event.story.id === this.story.id) {
+          this.story.content = event.story.content
+        }
+      } else if (!event.slugChanged) {
+        // Reload the page on save events
+        window.location.reload()
+      }
+      if (event.action === 'change') {
+        location.reload(true)
+      }
+    })
   }
 }
 </script>
