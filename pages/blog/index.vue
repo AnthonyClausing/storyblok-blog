@@ -20,7 +20,7 @@ export default {
   },
   asyncData(context) {
     return context.app.$storyapi.get('cdn/stories', {
-      version: process.env.NODE_ENV === 'production' ? 'published' : 'draft',
+      version: context.isDev ? 'draft' : 'published',
       startsWith: 'blog/'
     })
       .then((res) => {

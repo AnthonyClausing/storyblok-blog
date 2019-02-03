@@ -1,6 +1,9 @@
 <template>
-  <nuxt-link :to="id">
-    <article class="post-preview">
+  <nuxt-link
+    :to="'blog/' + id"
+    class="post-preview"
+  >
+    <article>
       <div class="post-preview-thumbnail" :style="{backgroundImage: 'url(' + thumbnailImage + ')'}" />
       <div class="post-preview-content">
         <h1>{{ title }}</h1>
